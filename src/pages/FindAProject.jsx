@@ -1,0 +1,174 @@
+import React, { useState, useEffect } from "react";
+import "../css/FindAProject.css";
+import "../../backend/connection";
+import { Link } from "react-router-dom";
+
+function FindAProject() {
+  const [recommendedProject, setRecommendedProject] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState(0);
+  const client = "../../backend/connection";
+  const [answers, setAnswers] = useState({
+    globalgoal: [],
+    type: [],
+    frontend: [],
+    backend: [],
+    database: [],
+  });
+
+  const questions = [
+    { id: "globalgoal", text: "What Global Goal are you interested in? (You can pick more than one)", 
+      options: [
+        "1. No Poverty", "2. Zero Hunger", "3. Good Health and Well-Being", "4. Quality Education", 
+        "5. Gender Equality", "6. Clean Water and Sanitation", "7. Affordable and Clean Energy", 
+        "8. Decent Work and Economic Growth", "9. Industry, Innovation and Infrastructure", 
+        "10. Reduced Inequalities", "11. Sustainable Cities and Communities", 
+        "12. Responsible Consumption and Production", "13. Climate Action", "14. Life Below Water", 
+        "15. Life on Land", "16. Peace, Justice and Strong Institutions", "17. Partnerships for the Goals"
+      ] 
+    },
+    { id: "type", text: "What kind of project would you like to create?", 
+      options: ["Mobile-Web App", "Web App", "Mobile App", "Chatbot"] 
+    },
+    { id: "frontend", text: "With what would you like to develop the FrontEnd of the project?", 
+      options: ["React", "Vue.js", "Angular", "Next.js", "WebXr", "React Native", "Flutter"], 
+      skippable: true 
+    },
+    { id: "backend", text: "With what would you like to develop the BackEnd of the project?", 
+      options: ["Django", "Node.js", "Spring Boot", "Flask", "FastAPI"], 
+      skippable: true 
+    },
+    { id: "database", text: "With what would you like to develop the Database of the project?", 
+      options: ["PostgreSQL", "MySQL", "Firebase", "MongoDB", "SQLite", "IPFS", "InfluxDB"], 
+      skippable: true 
+    },
+  ];
+
+  const handleAnswer = (option) => {
+    const currentQuestion = questions[step];
+
+    setAnswers((prevAnswers) => {
+      const updatedAnswers = prevAnswers[currentQuestion.id].includes(option)
+        ? prevAnswers[currentQuestion.id].filter((item) => item !== option)
+        : [...prevAnswers[currentQuestion.id], option];
+
+      return { ...prevAnswers, [currentQuestion.id]: updatedAnswers };
+    });
+  };
+
+  const nextStep = async () => {
+    if (step < questions.length - 1) {
+      setStep(step + 1);
+    } else {
+      console.log("Final User Answers Before Sending:", answers); 
+      /*abrir conexion db -> create -> cerrar conexion */
+
+      /*try {
+        await client.connect();
+        console.log('Conexión a PostgreSQL exitosa!');
+        // Aquí puedes realizar consultas SQL
+        const result = await client.query('SELECT * FROM tu_tabla');
+        console.log(result.rows);
+        await client.end(); // Cierra la conexión al finalizar
+      } catch (err) {
+        console.error('Error al conectar a PostgreSQL:', err);
+      }*/
+      
+      setStep(questions.length);
+    }
+  };
+
+  const skipQuestion = () => {
+    nextStep();
+  };
+
+  const handleFinish = async () => {
+    setLoading(true);
+    console.log("Sending request with:", JSON.stringify(answers));
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/find_project", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(answers),
+      });
+
+      console.log("Response status:", response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+      }
+
+      const bestProject = await response.json();
+      console.log("Received project:", bestProject);
+      setRecommendedProject(bestProject);
+    } catch (error) {
+      console.error("Error fetching project:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (step === questions.length) {
+      handleFinish();
+    }
+  }, [step]);
+
+  return (
+    <div className="find-project-container">
+      <h1 className="find-text">Find the Perfect Project for You</h1>
+      <div className="content-container">      
+        
+        {step < questions.length ? (
+          <div className="question-container">
+            <h2 className="txtColor">{questions[step].text}</h2>
+            <div className="options-container">
+              {questions[step].options.map((option) => (
+                <button 
+                  key={option} 
+                  className={`option-button ${answers[questions[step].id].includes(option) ? "selected" : ""}`} 
+                  onClick={() => handleAnswer(option)}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+
+            <button className="next-button" onClick={nextStep}>Next</button>
+
+            {questions[step].skippable && (
+              <button className="skip-button" onClick={skipQuestion}>Skip</button>
+            )}
+          </div>
+        ) : (
+          <div>
+          </div>
+        )}
+
+        {recommendedProject && recommendedProject.length > 0 && (
+          <div className="recommended-projects">
+            <h2>Recommended Projects:</h2>
+            {recommendedProject.map((project, index) => (
+              <Link to={`/projectdetails/${project.id}`} key={index} className="project-card">
+                <img
+                  src={project.image}
+                  alt={project.name}
+                  className="project-image"
+                />
+                <div className="project-info">
+                  <h3 className="project-title">{project.name}</h3>
+                  <h4 className='globalgoal'>{project.globalgoal}</h4>
+                  <p className="project-description">{project.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default FindAProject;

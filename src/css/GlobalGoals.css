@@ -1,0 +1,71 @@
+/* Home Page Styles */
+.globalgoals-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Center horizontally */
+  justify-content: center; 
+  min-height: 100vh;
+  padding-top: 60px;  /* Adjust padding for the fixed navbar */
+  text-align: center;
+}
+
+.globalgoals-catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));  /* Auto-resize cards */
+  gap: 20px;
+  width: 100%;
+}
+
+.text-container {
+  flex: 2;
+  text-align: center;  /* Center the text */
+  margin-top: 20px;  /* Space between the image and text */
+}
+
+.explanation-text {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tittle-text{
+  color: black;
+}
+
+.goals-catalog{
+  display: flex;
+  flex-direction: rows;
+  gap: 20px;
+  width: 100%;
+}
+
+.goal-card{
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px white;
+  transition: transform 0.3s;
+}
+
+.goal-card:hover{
+  transform: translateY(-10px);
+}
+
+.goal-image{
+  width: 255px;
+  height: 255px;
+}
+
+.goal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+
+.goal-description {
+  font-size: 1rem;
+  color: black;
+  text-align: center;
+  padding: 15px;
+  justify-self: unset;
+}

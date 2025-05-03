@@ -1,0 +1,135 @@
+/* Container Styling */
+.find-project-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.content-container {
+  display: flex;
+  align-items: center;  /* Align image & text vertically */
+  justify-content: center; /* Center content horizontally */
+  flex-direction: column;
+  width: 95%;  /* Expand width */
+  max-width: 1200px; /* Restrict max width to prevent it from stretching too much */
+  min-height: 300px;  /* Ensure container is taller than the image */
+  padding: 20px;  /* Add padding to increase size */
+  background-color: white;
+  border-radius: 20px;
+  margin: 0 auto; /* Center the container */
+}
+
+/* Question Box */
+.question-container {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 95%;
+  margin-top: 5px;
+}
+
+/* Buttons */
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.option-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+  background-color: blue;
+}
+
+.option-button:hover {
+  background-color: darkblue;
+}
+
+/* Style for selected options */
+.option-button.selected {
+  background-color: #990324;
+}
+
+/* Skip button styling */
+.skip-button {
+  background-color: lightgray;
+  color: white;
+  margin-left: 5%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.skip-button:hover {
+  background-color: darkgray;
+}
+
+.projects-catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));  /* Auto-resize cards */
+  gap: 20px;
+  margin-top: 30px;
+  width: 80%;
+}
+
+.project-card {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+}
+
+.project-image {
+  width: 100%;
+  height: 255px;
+  object-fit: cover;
+}
+
+.project-info {
+  padding: 15px;
+}
+
+.project-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.globalgoal-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.project-description {
+  font-size: 1rem;
+  color: gray;
+}
+
+.next-button{
+  margin-top: 1%;
+  background-color: blue;
+}
+
+.txtColor{
+  color: black
+}
+
+.find-text{
+  color: black;
+}

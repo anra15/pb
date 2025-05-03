@@ -1,0 +1,44 @@
+/* Home Page Styles */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;  
+  align-items: center;
+  padding-top: 0;
+  margin-top: 0 ;
+}
+
+.image-container {
+  flex: 1; 
+  width: auto; 
+  height: auto;
+}
+
+.welcome-image {
+  width: auto;  /* Adjust image size */
+  height: auto;
+}
+
+/* Text styles */
+.text-container {
+  flex: 2;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+}
+
+.explanation-text {
+  font-size: 1.2rem;
+  max-width: 30%;
+  margin: 0;
+  color: #000000;
+}
+
+.button-container{
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 10px;
+}
