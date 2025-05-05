@@ -1,28 +1,28 @@
 const frontend = [
-  "React ",
-  "Vue ",
-  "Angular ",
-  "Next.js ",
-  "WebXr ",
-  "React Native ",
-  "Flutter ",
-  "Vue.js ",
-  "Unity "
+  "| React | ",
+  "| Vue | ",
+  "| Angular | ",
+  "| Next.js | ",
+  "| WebXr | ",
+  "| React Native | ",
+  "| Flutter | ",
+  "| Vue.js | ",
+  "| Unity | "
 ];
 
 const backend = [
-  "Node.js ",
-  "Django ",
-  "Spring Boot ",
-  "Flask ",
-  "FastAPI "
+  "| Node.js | ",
+  "| Django | ",
+  "| Spring Boot | ",
+  "| Flask | ",
+  "| FastAPI | "
 ];
 
 const type = [
-  "Web App ",
-  "Mobile-Web App ",
-  "Mobile App ",
-  "Chatbot "
+  "| Web App | ",
+  "| Mobile-Web App | ",
+  "| Mobile App | ",
+  "| Chatbot | "
 ];
 
 const globalgoal = [
@@ -46,13 +46,13 @@ const globalgoal = [
 ];
 
 const database = [
-  "PostgreSQL ",
-  "MySQL ",
-  "Firebase ",
-  "MongoDB ",
-  "IPFS ",
-  "SQLite ",
-  "InfluxDB "
+  "| PostgreSQL | ",
+  "| MySQL | ",
+  "| Firebase | ",
+  "| MongoDB | ",
+  "| IPFS | ",
+  "| SQLite | ",
+  "| InfluxDB | "
 ];
 
 const projectsdata = [
