@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../css/FindAProject.css";
-import "../../backend/connection";
 import { Link } from "react-router-dom";
 
 function FindAProject() {
   const [recommendedProject, setRecommendedProject] = useState(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
-  const client = "../../backend/connection";
   const [answers, setAnswers] = useState({
     globalgoal: [],
-    type: [],
+    type_proj: [],
     frontend: [],
     backend: [],
     database: [],
@@ -27,7 +25,7 @@ function FindAProject() {
         "15. Life on Land", "16. Peace, Justice and Strong Institutions", "17. Partnerships for the Goals"
       ] 
     },
-    { id: "type", text: "What kind of project would you like to create?", 
+    { id: "type_proj", text: "What kind of project would you like to create?", 
       options: ["Mobile-Web App", "Web App", "Mobile App", "Chatbot"] 
     },
     { id: "frontend", text: "With what would you like to develop the FrontEnd of the project?", 
@@ -56,24 +54,41 @@ function FindAProject() {
     });
   };
 
+  const sanitizeData = (data) => {
+    return JSON.stringify(data, (key, value) => {
+      if (typeof value === 'string') {
+        // Sanitize string to ensure it's valid UTF-8
+        return value.replace(/[^\x00-\x7F]/g, '');  // Elimina caracteres no-ASCII
+      }
+      return value;
+    });
+  };
+  
   const nextStep = async () => {
     if (step < questions.length - 1) {
       setStep(step + 1);
     } else {
-      console.log("Final User Answers Before Sending:", answers); 
-      /*abrir conexion db -> create -> cerrar conexion */
-
-      /*try {
-        await client.connect();
-        console.log('Conexión a PostgreSQL exitosa!');
-        // Aquí puedes realizar consultas SQL
-        const result = await client.query('SELECT * FROM tu_tabla');
-        console.log(result.rows);
-        await client.end(); // Cierra la conexión al finalizar
-      } catch (err) {
-        console.error('Error al conectar a PostgreSQL:', err);
-      }*/
-      
+      console.log("Final User Answers Before Sending:", answers);
+      try {
+        const sanitizedAnswers = sanitizeData(answers);  // Sanitize answers
+        const response = await fetch("http://127.0.0.1:5000/save_answers", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: sanitizedAnswers  // Usa los datos sanitizados
+        });
+  
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Failed to save answers: ${response.status} - ${errorText}`);
+        }
+  
+        console.log("Answers saved successfully");
+      } catch (error) {
+        console.error("Error saving answers:", error);
+      }
+  
       setStep(questions.length);
     }
   };
