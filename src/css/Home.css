@@ -2,10 +2,10 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: top;  
+  justify-content: flex-start;  
   align-items: center;
-  padding-top: 0;
-  margin-top: 0 ;
+  padding-top: 80px; /* Add space to push content below navbar */
+  margin-top: 0;
 }
 
 .image-container {
@@ -27,6 +27,10 @@
   padding: 5px;
 }
 
+.sub-style {
+  color: #2dbc2d;
+}
+
 .explanation-text {
   font-size: 1.2rem;
   max-width: 30%;
@@ -41,4 +45,20 @@
   cursor: pointer;
   font-size: 1rem;
   margin: 10px;
+}
+
+.button-style{
+  background-color: hsl(190, 99%, 45%);
+  color: white;
+}
+
+.button-style:hover {
+  background-color: rgb(2, 136, 188);
+}
+
+.sta-title {
+  padding: 20px;
+  color:hsl(11, 98%, 60%);
+  border-radius: 10px;
+  border: 2px solid lab(84.38% 8.76 33.41 / 0.632); 
 }
