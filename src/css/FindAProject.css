@@ -3,9 +3,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
+  padding-top: 80px;
   padding-bottom: 10px;
+  background-color: white;
   text-align: center;
 }
 
@@ -42,22 +44,22 @@
 }
 
 .option-button {
-  padding: 10px 15px;
+  padding: 20px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
   transition: background 0.3s;
-  background-color: blue;
+  background-color: rgb(87, 174, 236);
 }
 
 .option-button:hover {
-  background-color: darkblue;
+  background-color: rgb(2, 136, 188);
 }
 
 /* Style for selected options */
 .option-button.selected {
-  background-color: #990324;
+  background-color: rgb(143, 227, 143);
 }
 
 /* Skip button styling */
@@ -76,12 +78,19 @@
   background-color: darkgray;
 }
 
+.reco-title {
+  color: rgb(46, 42, 73);
+  font-size: 45px;
+}
+
 .projects-catalog {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));  /* Auto-resize cards */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Flexible 4-column grid */
   gap: 20px;
-  margin-top: 30px;
-  width: 80%;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .project-card {
@@ -123,7 +132,7 @@
 
 .next-button{
   margin-top: 1%;
-  background-color: blue;
+  background-color: hsl(190, 99%, 45%);
 }
 
 .txtColor{
@@ -132,4 +141,5 @@
 
 .find-text{
   color: black;
+  font-weight: bold;
 }

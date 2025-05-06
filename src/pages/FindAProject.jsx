@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/FindAProject.css";
-import "../../backend/connection";
+
 import { Link } from "react-router-dom";
 
 function FindAProject() {
@@ -17,30 +17,35 @@ function FindAProject() {
   });
 
   const questions = [
-    { id: "globalgoal", text: "What Global Goal are you interested in? (You can pick more than one)", 
+    {
+      id: "globalgoal", text: "What Global Goal are you interested in? (You can pick more than one)",
       options: [
-        "1. No Poverty", "2. Zero Hunger", "3. Good Health and Well-Being", "4. Quality Education", 
-        "5. Gender Equality", "6. Clean Water and Sanitation", "7. Affordable and Clean Energy", 
-        "8. Decent Work and Economic Growth", "9. Industry, Innovation and Infrastructure", 
-        "10. Reduced Inequalities", "11. Sustainable Cities and Communities", 
-        "12. Responsible Consumption and Production", "13. Climate Action", "14. Life Below Water", 
+        "1. No Poverty", "2. Zero Hunger", "3. Good Health and Well-Being", "4. Quality Education",
+        "5. Gender Equality", "6. Clean Water and Sanitation", "7. Affordable and Clean Energy",
+        "8. Decent Work and Economic Growth", "9. Industry, Innovation and Infrastructure",
+        "10. Reduced Inequalities", "11. Sustainable Cities and Communities",
+        "12. Responsible Consumption and Production", "13. Climate Action", "14. Life Below Water",
         "15. Life on Land", "16. Peace, Justice and Strong Institutions", "17. Partnerships for the Goals"
-      ] 
+      ]
     },
-    { id: "type", text: "What kind of project would you like to create?", 
-      options: ["Mobile-Web App", "Web App", "Mobile App", "Chatbot"] 
+    {
+      id: "type", text: "What kind of project would you like to create?",
+      options: ["Mobile-Web App", "Web App", "Mobile App", "Chatbot"]
     },
-    { id: "frontend", text: "With what would you like to develop the FrontEnd of the project?", 
-      options: ["React", "Vue.js", "Angular", "Next.js", "WebXr", "React Native", "Flutter"], 
-      skippable: true 
+    {
+      id: "frontend", text: "With what would you like to develop the FrontEnd of the project?",
+      options: ["React", "Vue.js", "Angular", "Next.js", "WebXr", "React Native", "Flutter"],
+      skippable: true
     },
-    { id: "backend", text: "With what would you like to develop the BackEnd of the project?", 
-      options: ["Django", "Node.js", "Spring Boot", "Flask", "FastAPI"], 
-      skippable: true 
+    {
+      id: "backend", text: "With what would you like to develop the BackEnd of the project?",
+      options: ["Django", "Node.js", "Spring Boot", "Flask", "FastAPI"],
+      skippable: true
     },
-    { id: "database", text: "With what would you like to develop the Database of the project?", 
-      options: ["PostgreSQL", "MySQL", "Firebase", "MongoDB", "SQLite", "IPFS", "InfluxDB"], 
-      skippable: true 
+    {
+      id: "database", text: "With what would you like to develop the Database of the project?",
+      options: ["PostgreSQL", "MySQL", "Firebase", "MongoDB", "SQLite", "IPFS", "InfluxDB"],
+      skippable: true
     },
   ];
 
@@ -60,7 +65,7 @@ function FindAProject() {
     if (step < questions.length - 1) {
       setStep(step + 1);
     } else {
-      console.log("Final User Answers Before Sending:", answers); 
+      console.log("Final User Answers Before Sending:", answers);
       /*abrir conexion db -> create -> cerrar conexion */
 
       /*try {
@@ -73,7 +78,7 @@ function FindAProject() {
       } catch (err) {
         console.error('Error al conectar a PostgreSQL:', err);
       }*/
-      
+
       setStep(questions.length);
     }
   };
@@ -118,17 +123,18 @@ function FindAProject() {
 
   return (
     <div className="find-project-container">
-      <h1 className="find-text">Find the Perfect Project for You</h1>
-      <div className="content-container">      
-        
+      <div><h1 className="find-text">Find the Perfect Project for You</h1></div>
+
+      <div className="content-container">
+
         {step < questions.length ? (
           <div className="question-container">
             <h2 className="txtColor">{questions[step].text}</h2>
             <div className="options-container">
               {questions[step].options.map((option) => (
-                <button 
-                  key={option} 
-                  className={`option-button ${answers[questions[step].id].includes(option) ? "selected" : ""}`} 
+                <button
+                  key={option}
+                  className={`option-button ${answers[questions[step].id].includes(option) ? "selected" : ""}`}
                   onClick={() => handleAnswer(option)}
                 >
                   {option}
@@ -149,21 +155,23 @@ function FindAProject() {
 
         {recommendedProject && recommendedProject.length > 0 && (
           <div className="recommended-projects">
-            <h2>Recommended Projects:</h2>
-            {recommendedProject.map((project, index) => (
-              <Link to={`/projectdetails/${project.id}`} key={index} className="project-card">
-                <img
-                  src={project.image}
-                  alt={project.name}
-                  className="project-image"
-                />
-                <div className="project-info">
-                  <h3 className="project-title">{project.name}</h3>
-                  <h4 className='globalgoal'>{project.globalgoal}</h4>
-                  <p className="project-description">{project.description}</p>
-                </div>
-              </Link>
-            ))}
+            <h1 className="reco-title">Recommended Projects:</h1>
+            <div className="projects-catalog">
+              {recommendedProject.map((project, index) => (
+                <Link to={`/projectdetails/${project.id}`} key={index} className="project-card">
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    className="project-image"
+                  />
+                  <div className="project-info">
+                    <h3 className="project-title">{project.name}</h3>
+                    <h4 className='globalgoal'>{project.globalgoal}</h4>
+                    <p className="project-description">{project.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>
