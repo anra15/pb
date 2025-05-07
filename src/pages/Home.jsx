@@ -16,6 +16,8 @@ function Home() {
         <h2 className="sub-style">
           Welcome to Project Buddy!
         </h2>
+        <p className="explanation-text">Our platform aims to make it easier to find the project that best suits your knowledge and needs, while also raising awareness of the Global Goals and doing our part.</p>
+        <p></p>
         <p className="explanation-text">Here, you'll find guidance to find the project that better fits to your needs and the world's.</p>
       </div>
       <div className="button-container">

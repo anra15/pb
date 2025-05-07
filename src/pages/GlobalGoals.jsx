@@ -145,6 +145,11 @@ function GlobalGoals() {
           <p className="goal-description">Strengthen the means of<br />implementation and revitalize<br />the global partnership<br />for sustainable development.</p>
         </div>
       </div>
+      <div className="more-container">
+        <h1>Hey!</h1>
+        <h2>If you're interested of knowing more about Global Goals, clic the button 
+          down below to visit the official web page and learn about more actions to help our World!</h2>
+      </div>
     </div>
 
   );
