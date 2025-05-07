@@ -24,8 +24,16 @@ function Home() {
         <button className="button-style"><Link to="findaproject">Find your project!</Link></button>
       </div>
       <div className="sta-container">
-        <h1 className="sta-title">Here you'll find previous users more famous <br/>answers:</h1>
-      
+        <h1 className="sta-title">Here you'll find previous users more famous <br />answers:</h1>
+
+      </div>
+      <div className="more-home-container">
+        <h1>Hey!</h1>
+        <h2>If you're interested of knowing more about Global Goals, clic the button
+          down below to visit the official web page and learn about more actions to help our World!</h2>
+        <div className="button-center-wrapper">
+          <button className="button-gg-page-home" onClick={() => window.open("https://www.globalgoals.org", "_blank")}>Let's Go!</button>
+        </div>
       </div>
 
     </div>

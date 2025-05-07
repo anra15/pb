@@ -147,8 +147,11 @@ function GlobalGoals() {
       </div>
       <div className="more-container">
         <h1>Hey!</h1>
-        <h2>If you're interested of knowing more about Global Goals, clic the button 
+        <h2>If you're interested of knowing more about Global Goals, clic the button
           down below to visit the official web page and learn about more actions to help our World!</h2>
+        <div className="button-center-wrapper-gg">
+          <button className="button-gg-page" onClick={() => window.open("https://www.globalgoals.org", "_blank")}>Let's Go!</button>
+        </div>
       </div>
     </div>
 
