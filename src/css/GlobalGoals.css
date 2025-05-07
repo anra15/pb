@@ -1,9 +1,8 @@
-/* Home Page Styles */
 .globalgoals-container {
   display: flex;
   flex-direction: column;
   align-items: center;  /* Center horizontally */
-  justify-content: center; 
+  justify-content: flex-start; 
   min-height: 100vh;
   padding-top: 60px;  /* Adjust padding for the fixed navbar */
   text-align: center;
@@ -11,9 +10,12 @@
 
 .globalgoals-catalog {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));  /* Auto-resize cards */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Flexible 4-column grid */
   gap: 20px;
   width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .text-container {
@@ -34,25 +36,29 @@
 
 .goals-catalog{
   display: flex;
-  flex-direction: rows;
   gap: 20px;
   width: 100%;
 }
 
-.goal-card{
+.goal-card {
+  background: #fff;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .goal-card:hover{
   transform: translateY(-10px);
 }
 
-.goal-image{
-  width: 255px;
-  height: 255px;
+.goal-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .goal-title {
@@ -68,4 +74,22 @@
   text-align: center;
   padding: 15px;
   justify-self: unset;
+}
+
+@media (min-width: 1024px) {
+  .globalgoals-catalog {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .globalgoals-catalog {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .globalgoals-catalog {
+    grid-template-columns: 1fr;
+  }
 }
