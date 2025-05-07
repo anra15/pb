@@ -11,26 +11,33 @@ with open("projectsdata.json", "r") as file:
     projects = json.load(file)
 
 def find_best_projects(answers, max_results=5):
-    """Find the top matching projects based on user answers."""
+    """Find the top matching projects based on user answers, prioritizing globalgoal match."""
     matches = []
 
     for project in projects:
-        match_count = 0
+        project_tags = project.get("tags", {})
 
-        # Compare user answers with project tags
+        # 1. Strict filter: only include projects that match at least one selected global goal
+        user_goals = answers.get("globalgoal", [])
+        project_goals = project_tags.get("globalgoal", [])
+
+        if not any(goal in project_goals for goal in user_goals):
+            continue  # Skip this project if it doesn't match any selected global goal
+
+        # 2. Count total matches across other criteria
+        match_count = 0
         for key in answers:
-            if key in project["tags"] and answers[key]:  # Ensure the key exists in the project's tags
+            if key in project_tags and answers[key]:
                 for answer in answers[key]:
-                    if answer in project["tags"][key]:
+                    if answer in project_tags[key]:
                         match_count += 1
 
-        if match_count > 0:
-            matches.append((project, match_count))
+        matches.append((project, match_count))
 
-    # Sort projects by the number of matches (descending order)
+    # Sort projects by number of matching tags (descending)
     matches.sort(key=lambda x: x[1], reverse=True)
 
-    # Get top matching projects (max_results)
+    # Return top N matches
     best_projects = [match[0] for match in matches[:max_results]]
 
     return best_projects
