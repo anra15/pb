@@ -10,10 +10,10 @@ CORS(app)
 def insert_user_answers(answers):
     try:
         conn = psycopg2.connect(
-            dbname="projectbuddy_db",
+            dbname="projectbuddb",
             user="postgres",
             password="admin",
-            host="localhost",
+            host="127.0.0.1",
             port="5432"
         )
         cur = conn.cursor()
@@ -25,18 +25,17 @@ def insert_user_answers(answers):
         globalgoal = answers.get("globalgoal", [])
         databases = answers.get("database", [])  # No usar .get("databases")
 
-        print("Valores a insertar:")
-        print("Frontend:", frontend)
-        print("Backend:", backend)
-        print("Tipo de proyecto:", type_proj)
-        print("Objetivo global:", globalgoal)
-        print("Bases de datos:", databases)
-
         query = """
-            INSERT INTO answers (frontend, backend, type_proj, globalgoal, databases)
+            INSERT INTO "Answers" (frontend, backend, type_proj, globalgoal, databases)
             VALUES (%s, %s, %s, %s, %s)
         """
-        cur.execute(query, [frontend, backend, type_proj, globalgoal, databases])
+        cur.execute(query, [
+            json.dumps(frontend, ensure_ascii=False),
+            json.dumps(backend, ensure_ascii=False),
+            json.dumps(type_proj, ensure_ascii=False),
+            json.dumps(globalgoal, ensure_ascii=False),
+            json.dumps(databases, ensure_ascii=False)
+        ])
         conn.commit()
         cur.close()
         conn.close()
@@ -63,7 +62,56 @@ def save_answers():
         print("Error saving answers:", e)  # Ayuda a depurar en consola
         return jsonify({"error": str(e)}), 500
 
-# Load projects data from a JSON file
+def insert_recommendations(answers):
+    try:
+        conn = psycopg2.connect(
+            dbname="projectbuddb",
+            user="postgres",
+            password="admin",
+            host="127.0.0.1",
+            port="5432"
+        )
+        cur = conn.cursor()
+
+        projects = answers.get("projects", [])
+
+        query = """
+            INSERT INTO "Recommendations" (projects)
+            VALUES (%s)
+            RETURNING id;
+        """
+        cur.execute(query, [json.dumps(projects, ensure_ascii=False)])
+        inserted_id = cur.fetchone()[0]  # ⬅️ Obtener el ID insertado
+
+        conn.commit()
+        cur.close()
+        conn.close()
+        print("Respuestas insertadas correctamente. ID:", inserted_id)
+        return inserted_id  # ⬅️ Devolver el ID
+
+    except Exception as e:
+        print("Error inserting user answers:", e)
+        raise
+
+@app.route('/save_recommendations', methods=['POST'])
+def save_recommendations():
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"error": "Invalid JSON received"}), 400
+
+    print("Received answers to save:", data)
+
+    if not data:
+        return jsonify({"error": "No data received or JSON is malformed"}), 400
+
+    try:
+        print("Parsed JSON data:", data)
+        inserted_id = insert_recommendations(data)  # ⬅️ Guardar y obtener el ID
+        return jsonify({"status": "success", "id": inserted_id}), 200  # ⬅️ Retornar el ID al frontend
+    except Exception as e:
+        print("Error saving answers:", e)
+        return jsonify({"error": str(e)}), 500
+    
 with open("projectsdata.json", "r") as file:
     projects = json.load(file)
 
@@ -110,3 +158,30 @@ def find_project():
 if __name__ == '__main__':
     print("Starting Flask server...")  # Debugging message
     app.run(debug=True)
+
+@app.route('/get_recommendations/<int:rec_id>', methods=['GET'])
+def get_recommendations(rec_id):
+    try:
+        conn = psycopg2.connect(
+            dbname="projectbuddb",
+            user="postgres",
+            password="admin",
+            host="127.0.0.1",
+            port="5432"
+        )
+        cur = conn.cursor()
+        query = 'SELECT projects FROM "Recommendations" WHERE id = %s'
+        cur.execute(query, (rec_id,))
+        result = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        if result:
+            projects = result[0]
+            return jsonify(projects), 200
+        else:
+            return jsonify({"error": "Recommendation ID not found"}), 404
+
+    except Exception as e:
+        print("Error retrieving recommendations:", e)
+        return jsonify({"error": str(e)}), 500
