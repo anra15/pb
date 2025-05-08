@@ -141,10 +141,6 @@ def find_best_projects(answers, max_results=5):
         # 2. Count total matches across other criteria
         match_count = 0
         for key in answers:
-            if key in project.get("tags", {}) and answers[key]:
-                match_count += sum(1 for answer in answers[key] if answer in project["tags"][key])
-        if match_count > 0:
-            matches.append((project, match_count))
             if key in project_tags and answers[key]:
                 for answer in answers[key]:
                     if answer in project_tags[key]:
@@ -154,7 +150,11 @@ def find_best_projects(answers, max_results=5):
 
     # Sort projects by number of matching tags (descending)
     matches.sort(key=lambda x: x[1], reverse=True)
-    return [match[0] for match in matches[:max_results]]
+
+    # Return top N matches
+    best_projects = [match[0] for match in matches[:max_results]]
+
+    return best_projects
 
 # =====================
 # RUTAS FLASK
