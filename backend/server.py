@@ -11,9 +11,9 @@ CORS(app)
 # Función para conexión a la base de datos
 def get_connection():
     return psycopg2.connect(
-        dbname="projectbuddb",
+        dbname="back_db",
         user="postgres",
-        password="admin",
+        password="Jimmy&Tommy&Echo15",
         host="127.0.0.1",
         port="5432"
     )
