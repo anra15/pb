@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../css/FindAProject.css";
-
 import { Link } from "react-router-dom";
 
 function FindAProject() {
   const [recommendedProject, setRecommendedProject] = useState(null);
+  const [recommendationId, setRecommendationId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({
     globalgoal: [],
-    type: [],
+    type_proj: [],
     frontend: [],
     backend: [],
     database: [],
@@ -28,7 +28,7 @@ function FindAProject() {
       ]
     },
     {
-      id: "type", text: "What kind of project would you like to create?",
+      id: "type_proj", text: "What kind of project would you like to create?",
       options: ["Mobile-Web App", "Web App", "Mobile App", "Chatbot"]
     },
     {
@@ -65,6 +65,24 @@ function FindAProject() {
       setStep(step + 1);
     } else {
       console.log("Final User Answers Before Sending:", answers);
+      try {
+        const response = await fetch("http://127.0.0.1:5000/save_answers", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(answers)
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Failed to save answers: ${response.status} - ${errorText}`);
+        }
+
+        console.log("Answers saved successfully");
+      } catch (error) {
+        console.error("Error saving answers:", error);
+      }
 
       setStep(questions.length);
     }
@@ -95,6 +113,22 @@ function FindAProject() {
       const bestProject = await response.json();
       console.log("Received project:", bestProject);
       setRecommendedProject(bestProject);
+
+      const saveResponse = await fetch("http://127.0.0.1:5000/save_recommendations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ projects: bestProject })
+      });
+
+      if (!saveResponse.ok) {
+        const errorText = await saveResponse.text();
+        throw new Error(`Failed to save answers: ${saveResponse.status} - ${errorText}`);
+      }
+
+      const saveResult = await saveResponse.json();
+      setRecommendationId(saveResult.id);
     } catch (error) {
       console.error("Error fetching project:", error);
     } finally {
@@ -160,8 +194,21 @@ function FindAProject() {
                   </Link>
                 ))}
               </div>
+          <>
+            <div className="recommended-projects">
+              <h2>Recommended Projects:</h2>
+              {recommendedProject.map((project) => (
+                <Link to={`/projectdetails/${project.id}`} key={project.id} className="project-card">
+                  <img src={project.image} alt={project.name} className="project-image" />
+                  <div className="project-info">
+                    <h3 className="project-title">{project.name}</h3>
+                    <h4 className='globalgoal'>{project.globalgoal}</h4>
+                    <p className="project-description">{project.description}</p>
+                  </div>
+                </Link>
+              ))}
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>
