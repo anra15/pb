@@ -199,12 +199,12 @@ function FindAProject() {
                 <div className="recommended-projects">
                   <h2>Recommended Projects:</h2>
                   {recommendedProject.map((project) => (
-                    <Link to={`/projectdetails/${project.id}`} key={project.id} className="project-card">
-                      <img src={project.image} alt={project.name} className="project-image" />
-                      <div className="project-info">
-                        <h3 className="project-title">{project.name}</h3>
-                        <h4 className='globalgoal'>{project.globalgoal}</h4>
-                        <p className="project-description">{project.description}</p>
+                    <Link to={`/projectdetails/${project.id}`} key={project.id} className="project-card-fp">
+                      <img src={project.image} alt={project.name} className="project-image-fp" />
+                      <div className="project-info-fp">
+                        <h3 className="project-title-fp">{project.name}</h3>
+                        <h4 className='globalgoal-fp'>{project.globalgoal}</h4>
+                        <p className="project-description-fp">{project.description}</p>
                       </div>
                     </Link>
                   ))}
