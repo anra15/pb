@@ -78,11 +78,28 @@
 
 .more-container {
   padding: 20px;
-  color:hsl(11, 98%, 60%);
+  color:black;
   border-radius: 10px;
   border: 2px solid lab(84.38% 8.76 33.41 / 0.632);
   margin-left: 20px;
   margin-right: 20px; 
+  margin-bottom: 20px;
+}
+
+.button-center-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button-gg-page {
+  background-color: #d58926;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 @media (min-width: 1024px) {

@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../css/FindAProject.css";
-
 import { Link } from "react-router-dom";
 
 function FindAProject() {
   const [recommendedProject, setRecommendedProject] = useState(null);
+  const [recommendationId, setRecommendationId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
-  const client = "../../backend/connection";
   const [answers, setAnswers] = useState({
     globalgoal: [],
-    type: [],
+    type_proj: [],
     frontend: [],
     backend: [],
     database: [],
@@ -29,7 +28,7 @@ function FindAProject() {
       ]
     },
     {
-      id: "type", text: "What kind of project would you like to create?",
+      id: "type_proj", text: "What kind of project would you like to create?",
       options: ["Mobile-Web App", "Web App", "Mobile App", "Chatbot"]
     },
     {
@@ -66,18 +65,24 @@ function FindAProject() {
       setStep(step + 1);
     } else {
       console.log("Final User Answers Before Sending:", answers);
-      /*abrir conexion db -> create -> cerrar conexion */
+      try {
+        const response = await fetch("http://127.0.0.1:5000/save_answers", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(answers)
+        });
 
-      /*try {
-        await client.connect();
-        console.log('Conexión a PostgreSQL exitosa!');
-        // Aquí puedes realizar consultas SQL
-        const result = await client.query('SELECT * FROM tu_tabla');
-        console.log(result.rows);
-        await client.end(); // Cierra la conexión al finalizar
-      } catch (err) {
-        console.error('Error al conectar a PostgreSQL:', err);
-      }*/
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Failed to save answers: ${response.status} - ${errorText}`);
+        }
+
+        console.log("Answers saved successfully");
+      } catch (error) {
+        console.error("Error saving answers:", error);
+      }
 
       setStep(questions.length);
     }
@@ -108,6 +113,22 @@ function FindAProject() {
       const bestProject = await response.json();
       console.log("Received project:", bestProject);
       setRecommendedProject(bestProject);
+
+      const saveResponse = await fetch("http://127.0.0.1:5000/save_recommendations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ projects: bestProject })
+      });
+
+      if (!saveResponse.ok) {
+        const errorText = await saveResponse.text();
+        throw new Error(`Failed to save answers: ${saveResponse.status} - ${errorText}`);
+      }
+
+      const saveResult = await saveResponse.json();
+      setRecommendationId(saveResult.id);
     } catch (error) {
       console.error("Error fetching project:", error);
     } finally {
@@ -125,7 +146,7 @@ function FindAProject() {
     <div className="find-project-container">
       <div><h1 className="find-text">Find the Perfect Project for You</h1></div>
 
-      <div className="content-container">
+      <div className="content-container-fp">
 
         {step < questions.length ? (
           <div className="question-container">
@@ -154,23 +175,41 @@ function FindAProject() {
         )}
 
         {recommendedProject && recommendedProject.length > 0 && (
-          <div className="recommended-projects">
-            <h1 className="reco-title">Recommended Projects:</h1>
-            <div className="projects-catalog">
-              {recommendedProject.map((project, index) => (
-                <Link to={`/projectdetails/${project.id}`} key={index} className="project-card">
-                  <img
-                    src={project.image}
-                    alt={project.name}
-                    className="project-image"
-                  />
-                  <div className="project-info">
-                    <h3 className="project-title">{project.name}</h3>
-                    <h4 className='globalgoal'>{project.globalgoal}</h4>
-                    <p className="project-description">{project.description}</p>
-                  </div>
-                </Link>
-              ))}
+          <div className="container">
+            <div className="recommended-projects">
+              <h1 className="reco-title">Recommended Projects:</h1>
+              <div className="projects-catalog-fp">
+                {recommendedProject.map((project, index) => (
+                  <Link to={`/projectdetails/${project.id}`} key={index} className="project-card-fp">
+                    <img
+                      src={project.image}
+                      alt={project.name}
+                      className="project-image-fp"
+                    />
+                    <div className="project-info-fp">
+                      <h3 className="project-title-fp">{project.name}</h3>
+                      <h4 className='globalgoal-fp'>{project.globalgoal}</h4>
+                      <p className="project-description-fp">{project.description}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <>
+                <div className="recommended-projects">
+                  <h2>Recommended Projects:</h2>
+                  {recommendedProject.map((project) => (
+                    <Link to={`/projectdetails/${project.id}`} key={project.id} className="project-card">
+                      <img src={project.image} alt={project.name} className="project-image" />
+                      <div className="project-info">
+                        <h3 className="project-title">{project.name}</h3>
+                        <h4 className='globalgoal'>{project.globalgoal}</h4>
+                        <p className="project-description">{project.description}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+              </>
             </div>
           </div>
         )}

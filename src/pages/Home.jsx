@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Home.css';
 
 function Home() {
+  const [popularAnswers, setPopularAnswers] = useState(null);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/popular_answers')
+      .then(res => res.json())
+      .then(data => setPopularAnswers(data))
+      .catch(err => console.error("Error fetching popular answers:", err));
+  }, []);
+
   return (
     <div className="home-container">
       <div className="image-container">
@@ -23,9 +32,34 @@ function Home() {
       <div className="button-container">
         <button className="button-style"><Link to="findaproject">Find your project!</Link></button>
       </div>
-      <div className="sta-container">
-        <h1 className="sta-title">Here you'll find previous users more famous <br/>answers:</h1>
-      
+      <div className="sta-container"  style={{ color: 'black' }}>
+        <h1 className="sta-title">
+          Here you'll find previous users most famous <br />answers:
+        </h1>
+        {popularAnswers ? (
+          <div className="popular-answers">
+            {Object.entries(popularAnswers).map(([category, items]) => (
+              <div key={category}>
+                <h3>{category}</h3>
+                <ul>
+                  {items.map(([item, count]) => (
+                    <li key={item}>{item} ({count} votes)</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>Loading popular answers...</p>
+        )}
+      </div>
+      <div className="more-home-container">
+        <h1>Hey!</h1>
+        <h2>If you're interested of knowing more about Global Goals, clic the button
+          down below to visit the official web page and learn about more actions to help our World!</h2>
+        <div className="button-center-wrapper">
+          <button className="button-gg-page-home" onClick={() => window.open("https://www.globalgoals.org", "_blank")}>Let's Go!</button>
+        </div>
       </div>
 
     </div>
