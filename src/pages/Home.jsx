@@ -37,22 +37,27 @@ function Home() {
         <h1 className="sta-title">
           Here you'll find previous users most famous <br />answers:
         </h1>
-        <div className="popular-answers">
-          {Object.entries(popularAnswers).map(([category, items]) => (
-            <div key={category} className="popular-answer-card">
-              <h3>{category}</h3>
-              <ul>
-                {items.map(([item, count]) => (
-                  <li key={item}>
-                    {item} <strong>({count} votes)</strong>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
 
+        {popularAnswers ? (
+          <div className="popular-answers">
+            {Object.entries(popularAnswers).map(([category, items]) => (
+              <div key={category} className="popular-answer-card">
+                <h3>{category}</h3>
+                <ul>
+                  {items.map(([item, count]) => (
+                    <li key={item}>
+                      {item} <strong>({count} votes)</strong>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>Loading popular answers...</p>
+        )}
       </div>
+
       <div className="more-home-container">
         <h1>Hey!</h1>
         <h2>If you're interested of knowing more about Global Goals, clic the button
