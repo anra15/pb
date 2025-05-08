@@ -77,13 +77,18 @@
 
 /* Global Goals Section */
 .more-home-container {
+  width: 50%;
+  max-width: 600px;
+  min-width: 280px;
+  margin: 20px auto;
   padding: 20px;
-  color: hsl(119, 63%, 38%);
+  color: black;
   border-radius: 10px;
   border: 2px solid lch(89.88% 61.55 140.23 / 0.632);
-  margin: 20px;
   text-align: center;
+  box-sizing: border-box;
 }
+
 
 .button-center-wrapper-gg {
   display: flex;
@@ -139,5 +144,18 @@
   .text-container,
   .more-home-container {
     padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .more-home-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .more-home-container {
+    width: 95%;
+    padding: 15px;
   }
 }

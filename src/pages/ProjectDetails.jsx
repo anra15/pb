@@ -13,7 +13,6 @@ function ProjectDetails() {
     return (
         <div>
             <div className="content-container">
-                <h2 className="text">Here you'll find more details of the selected project: </h2>
                 <h4 className="project-title">{project.name}</h4>
                 <img src={project.image} alt={project.name} className="project-image" />
                 <h1 className="globalgoal-title">Globla Goal: {project.globalgoal}</h1>

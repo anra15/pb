@@ -7,7 +7,6 @@ function FindAProject() {
   const [recommendedProject, setRecommendedProject] = useState(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
-  const client = "../../backend/connection";
   const [answers, setAnswers] = useState({
     globalgoal: [],
     type: [],
@@ -66,18 +65,6 @@ function FindAProject() {
       setStep(step + 1);
     } else {
       console.log("Final User Answers Before Sending:", answers);
-      /*abrir conexion db -> create -> cerrar conexion */
-
-      /*try {
-        await client.connect();
-        console.log('Conexión a PostgreSQL exitosa!');
-        // Aquí puedes realizar consultas SQL
-        const result = await client.query('SELECT * FROM tu_tabla');
-        console.log(result.rows);
-        await client.end(); // Cierra la conexión al finalizar
-      } catch (err) {
-        console.error('Error al conectar a PostgreSQL:', err);
-      }*/
 
       setStep(questions.length);
     }
@@ -125,7 +112,7 @@ function FindAProject() {
     <div className="find-project-container">
       <div><h1 className="find-text">Find the Perfect Project for You</h1></div>
 
-      <div className="content-container">
+      <div className="content-container-fp">
 
         {step < questions.length ? (
           <div className="question-container">
@@ -154,23 +141,25 @@ function FindAProject() {
         )}
 
         {recommendedProject && recommendedProject.length > 0 && (
-          <div className="recommended-projects">
-            <h1 className="reco-title">Recommended Projects:</h1>
-            <div className="projects-catalog">
-              {recommendedProject.map((project, index) => (
-                <Link to={`/projectdetails/${project.id}`} key={index} className="project-card">
-                  <img
-                    src={project.image}
-                    alt={project.name}
-                    className="project-image"
-                  />
-                  <div className="project-info">
-                    <h3 className="project-title">{project.name}</h3>
-                    <h4 className='globalgoal'>{project.globalgoal}</h4>
-                    <p className="project-description">{project.description}</p>
-                  </div>
-                </Link>
-              ))}
+          <div className="container">
+            <div className="recommended-projects">
+              <h1 className="reco-title">Recommended Projects:</h1>
+              <div className="projects-catalog-fp">
+                {recommendedProject.map((project, index) => (
+                  <Link to={`/projectdetails/${project.id}`} key={index} className="project-card-fp">
+                    <img
+                      src={project.image}
+                      alt={project.name}
+                      className="project-image-fp"
+                    />
+                    <div className="project-info-fp">
+                      <h3 className="project-title-fp">{project.name}</h3>
+                      <h4 className='globalgoal-fp'>{project.globalgoal}</h4>
+                      <p className="project-description-fp">{project.description}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         )}
