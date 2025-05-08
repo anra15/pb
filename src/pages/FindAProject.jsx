@@ -196,7 +196,7 @@ function FindAProject() {
                 ))}
               </div>
               <>
-                <div className="recommended-projects">
+                {/* <div className="recommended-projects">
                   <h2>Recommended Projects:</h2>
                   {recommendedProject.map((project) => (
                     <Link to={`/projectdetails/${project.id}`} key={project.id} className="project-card-fp">
@@ -208,7 +208,7 @@ function FindAProject() {
                       </div>
                     </Link>
                   ))}
-                </div>
+                </div> */}
 
               </>
             </div>
