@@ -31,7 +31,7 @@ function ProjectDetails() {
             console.log("Project saved successfully:", result);
             const rating = prompt("¿Qué tan satisfecho estás del 1 al 10?");
             if (rating && !isNaN(rating)) {
-                fetch("http://localhost:5000/save_rating", {
+                fetch(`${API_URL}/save_rating`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ rating: parseInt(rating, 10) }),
