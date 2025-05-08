@@ -159,3 +159,44 @@
     padding: 15px;
   }
 }
+
+.popular-answers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  margin-top: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.popular-answers h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.3rem;
+}
+
+.popular-answers ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.popular-answers li {
+  background-color: #ffffff;
+  margin: 0.5rem 0;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.popular-answers li:hover {
+  transform: scale(1.02);
+  background-color: #e8f5ff;
+}
+

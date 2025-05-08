@@ -33,26 +33,25 @@ function Home() {
       <div className="button-container">
         <button className="button-style"><Link to="/findaproject">Find your project!</Link></button>
       </div>
-      <div className="sta-container"  style={{ color: 'black' }}>
+      <div className="sta-container" style={{ color: 'black' }}>
         <h1 className="sta-title">
           Here you'll find previous users most famous <br />answers:
         </h1>
-        {popularAnswers ? (
-          <div className="popular-answers">
-            {Object.entries(popularAnswers).map(([category, items]) => (
-              <div key={category}>
-                <h3>{category}</h3>
-                <ul>
-                  {items.map(([item, count]) => (
-                    <li key={item}>{item} ({count} votes)</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>Loading popular answers...</p>
-        )}
+        <div className="popular-answers">
+          {Object.entries(popularAnswers).map(([category, items]) => (
+            <div key={category} className="popular-answer-card">
+              <h3>{category}</h3>
+              <ul>
+                {items.map(([item, count]) => (
+                  <li key={item}>
+                    {item} <strong>({count} votes)</strong>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
       </div>
       <div className="more-home-container">
         <h1>Hey!</h1>
