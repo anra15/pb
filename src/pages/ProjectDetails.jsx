@@ -10,7 +10,7 @@ function ProjectDetails() {
         return <h2>Project not found</h2>;
     }
 
-    
+
     const handleSaveProject = async () => {
         try {
             const API_URL = import.meta.env.VITE_API_URL;
@@ -66,8 +66,10 @@ function ProjectDetails() {
                     <p className="project-description-sub">Database suggestions for the project:</p>
                     <p className="project-description">{project.tags.database.join(', ')}</p>
                 </div>
+                <div className="button-wrapper">
+                    <button className="button-selection" onClick={handleSaveProject}>Select this project</button>
+                </div>
 
-                <button onClick={handleSaveProject}>Elegir este proyecto</button>
             </div>
         </div>
     );

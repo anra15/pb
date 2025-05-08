@@ -70,3 +70,17 @@
     color: #00338b;
     margin-top: 10px;
   }
+
+  .button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* optional spacing */
+    margin-bottom: 20px;
+  }
+  
+
+  .button-selection {
+    background-color: white;
+    border-color: #00338b;
+  }
