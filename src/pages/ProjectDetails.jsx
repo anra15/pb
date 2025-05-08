@@ -27,7 +27,17 @@ function ProjectDetails() {
 
             const result = await response.json();
             console.log("Project saved successfully:", result);
-            alert("¡Proyecto guardado exitosamente!");
+            const rating = prompt("¿Qué tan satisfecho estás del 1 al 10?");
+            if (rating && !isNaN(rating)) {
+                fetch("http://localhost:5000/save_rating", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ rating: parseInt(rating, 10) }),
+                })
+                    .then((res) => res.json())
+                    .then((data) => console.log("Rating guardado:", data))
+                    .catch((err) => console.error("Error guardando rating", err));
+            }
         } catch (error) {
             console.error("Error saving project:", error);
             alert("Error al guardar el proyecto. Revisa la consola para más detalles.");
