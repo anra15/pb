@@ -178,7 +178,8 @@ function FindAProject() {
         {recommendedProject && recommendedProject.length > 0 && (
           <div className="container">
             <div className="recommended-projects">
-              <h1 className="reco-title">Recommended Projects:</h1>
+              <h1 className="reco-title">Recommended Projects</h1>
+              <h2 className="reco-subtext">Please select one project</h2>
               <div className="projects-catalog-fp">
                 {recommendedProject.map((project, index) => (
                   <Link to={`/projectdetails/${project.id}`} key={index} className="project-card-fp">

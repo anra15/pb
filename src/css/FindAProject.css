@@ -97,6 +97,14 @@ body {
   text-align: center;
 }
 
+.reco-subtext {
+  color: black;
+  font-size: 30px;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+
 .projects-catalog-fp {
   display: grid;
   justify-content: center; /* Center the grid in container */
@@ -165,6 +173,10 @@ body {
     padding: 10px;
   }
 
+  .reco-subtext {
+    font-size: 15px;
+  }
+
   .project-image-fp {
     height: 200px;
   }
@@ -204,6 +216,10 @@ body {
 @media (max-width: 480px) {
   .reco-title {
     font-size: 24px;
+  }
+  
+  .reco-subtext {
+    font-size: 10px;
   }
 
   .project-image-fp {
