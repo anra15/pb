@@ -6,12 +6,12 @@ function Home() {
   const API_URL = import.meta.env.VITE_API_URL;
   const [popularAnswers, setPopularAnswers] = useState(null);
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch(`${API_URL}/popular_answers`)
       .then(res => res.json())
       .then(data => setPopularAnswers(data))
       .catch(err => console.error("Error fetching popular answers:", err));
-  }, []);
+  }, []);*/
 
   return (
     <div className="home-container">
@@ -33,7 +33,7 @@ function Home() {
       <div className="button-container">
         <button className="button-style"><Link to="findaproject">Find your project!</Link></button>
       </div>
-      <div className="sta-container"  style={{ color: 'black' }}>
+      {/* <div className="sta-container"  style={{ color: 'black' }}>
         <h1 className="sta-title">
           Here you'll find previous users most famous <br />answers:
         </h1>
@@ -53,7 +53,7 @@ function Home() {
         ) : (
           <p>Loading popular answers...</p>
         )}
-      </div>
+      </div> */}
       <div className="more-home-container">
         <h1>Hey!</h1>
         <h2>If you're interested of knowing more about Global Goals, clic the button
