@@ -3,6 +3,7 @@ from flask_cors import CORS
 import psycopg2
 import json
 import os
+from collections import Counter
 
 app = Flask(__name__)
 CORS(app)
@@ -72,6 +73,51 @@ def insert_user_projects(project):
         print("Error al insertar el proyecto:", e)
         raise
 
+@app.route('/save_rating', methods=['POST'])
+def save_rating():
+    data = request.get_json()
+    rating = data.get('rating')
+    if not rating or not isinstance(rating, int):
+        return jsonify({"error": "Invalid rating"}), 400
+
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute('INSERT INTO "Questionnaire" (satisfaction) VALUES (%s)', (rating,))
+        return jsonify({"status": "success"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route('/popular_answers', methods=['GET'])
+def get_popular_answers():
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute('SELECT frontend, backend, type_proj, globalgoal, databases FROM "Answers"')
+                rows = cur.fetchall()
+
+        categories = ['frontend', 'backend', 'type_proj', 'globalgoal', 'databases']
+        counters = {cat: Counter() for cat in categories}
+
+        for row in rows:
+            for i, value in enumerate(row):
+                try:
+                    items = value
+                    if isinstance(items, list):
+                        counters[categories[i]].update(items)
+                except Exception as e:
+                    print(f"Error decoding JSON in {categories[i]}: {e}")
+
+        # Return top 3 of each category
+        result = {
+            category: counters[category].most_common(3)
+            for category in categories
+        }
+
+        return jsonify(result), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 # =====================
 # CARGA DE PROYECTOS
 # =====================
