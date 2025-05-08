@@ -10,7 +10,7 @@ function GlobalGoals() {
       <div className="globalgoals-catalog">
         <div className="goal-card">
           <img
-            src="../gg1.jpg"
+            src="../images/gg1.jpg"
             className="goal-image"
           />
           <h3 className="goal-title">No Poverty</h3>
