@@ -11,10 +11,10 @@ CORS(app)
 # Función para conexión a la base de datos
 def get_connection():
     return psycopg2.connect(
-        dbname="back_db",
-        user="postgres",
-        password="Jimmy&Tommy&Echo15",
-        host="127.0.0.1",
+        dbname="back_db_9vsk",
+        user="back_db_9vsk_user",
+        password="hlxMxImKylR9sgjRiDF25E4KzB6Fv1MG",
+        host="dpg-d0dg70h5pdvs73952pc0-a",
         port="5432"
     )
 
