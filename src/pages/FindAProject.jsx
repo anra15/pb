@@ -3,6 +3,7 @@ import "../css/FindAProject.css";
 import { Link } from "react-router-dom";
 
 function FindAProject() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [recommendedProject, setRecommendedProject] = useState(null);
   const [recommendationId, setRecommendationId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,7 @@ function FindAProject() {
   });
 
   const questions = [
-    {
+      {
       id: "globalgoal", text: "What Global Goal are you interested in? (You can pick more than one)",
       options: [
         "1. No Poverty", "2. Zero Hunger", "3. Good Health and Well-Being", "4. Quality Education",
@@ -66,7 +67,7 @@ function FindAProject() {
     } else {
       console.log("Final User Answers Before Sending:", answers);
       try {
-        const response = await fetch("http://127.0.0.1:5000/save_answers", {
+        const response = await fetch(`${API_URL}/save_answers`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -97,7 +98,7 @@ function FindAProject() {
     console.log("Sending request with:", JSON.stringify(answers));
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/find_project", {
+      const response = await fetch(`${API_URL}/find_project`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(answers),
@@ -114,7 +115,7 @@ function FindAProject() {
       console.log("Received project:", bestProject);
       setRecommendedProject(bestProject);
 
-      const saveResponse = await fetch("http://127.0.0.1:5000/save_recommendations", {
+      const saveResponse = await fetch(`${API_URL}/save_recommendations`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

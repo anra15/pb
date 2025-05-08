@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import '../css/Home.css';
 
 function Home() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [popularAnswers, setPopularAnswers] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/popular_answers')
+    fetch(`${API_URL}/popular_answers`)
       .then(res => res.json())
       .then(data => setPopularAnswers(data))
       .catch(err => console.error("Error fetching popular answers:", err));
