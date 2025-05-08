@@ -179,6 +179,7 @@ function FindAProject() {
           <div className="container">
             <div className="recommended-projects">
               <h1 className="reco-title">Recommended Projects:</h1>
+              <h2>Please choose one project</h2>
               <div className="projects-catalog-fp">
                 {recommendedProject.map((project, index) => (
                   <Link to={`/projectdetails/${project.id}`} key={index} className="project-card-fp">
@@ -196,20 +197,6 @@ function FindAProject() {
                 ))}
               </div>
               <>
-                {/* <div className="recommended-projects">
-                  <h2>Recommended Projects:</h2>
-                  {recommendedProject.map((project) => (
-                    <Link to={`/projectdetails/${project.id}`} key={project.id} className="project-card-fp">
-                      <img src={project.image} alt={project.name} className="project-image-fp" />
-                      <div className="project-info-fp">
-                        <h3 className="project-title-fp">{project.name}</h3>
-                        <h4 className='globalgoal-fp'>{project.globalgoal}</h4>
-                        <p className="project-description-fp">{project.description}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div> */}
-
               </>
             </div>
           </div>
