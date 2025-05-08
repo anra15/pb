@@ -32,7 +32,7 @@ function Navbar() {
             <Link to="/" className="navbar-link">Home</Link>
           </li>
           <li className="navbar-item" onClick={closeMobileMenu}>
-            <Link to="findaproject" className="navbar-link">Find Project</Link>
+            <Link to="/findaproject" className="navbar-link">Find Project</Link>
           </li>
           <li className="navbar-item" onClick={closeMobileMenu}>
             <Link to="/projects" className="navbar-link">Projects</Link>
